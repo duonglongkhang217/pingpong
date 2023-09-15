@@ -2,7 +2,6 @@ import turtle
 import pygame
 import os
 
-pygame.mixer.Sound("")
 
 board = turtle.Screen()
 board.title = "Pong"
@@ -99,44 +98,47 @@ scr2.hideturtle()
 scr2.goto(0, 260)
 scr2.write("                                       Player 2: 0", align="center", font=("Comic Sans MS", 24, "normal"))
 
+# ...
+border_left = -1090
+border_right = 1090
 while True:
-    try:
-        board.update()
-        ball.setx(ball.xcor() + ball.dx)
-        ball.sety(ball.ycor() + ball.dy)
+    board.update()
+    ball.setx(ball.xcor() + ball.dx)
+    ball.sety(ball.ycor() + ball.dy)
 
-        if ball.ycor() > 290:
-            ball.sety(290)
-            ball.dy *= -1
+    if ball.ycor() > 290:
+        ball.sety(290)
+        ball.dy *= -1
 
-        if ball.ycor() < -290:
-            ball.sety(-290)
-            ball.dy *= -1
+    if ball.ycor() < -290:
+        ball.sety(-290)
+        ball.dy *= -1
 
-        if ball.xcor() > 390:
-            ball.goto(0, 0)
-            ball.dx *= -1
-            score_1 += 1
-            scr.clear()
-            scr.write("Player 1: {}                                        ".format(score_1), align="center", font=("Comic Sans MS", 24, "normal"))
+    
+    if ball.xcor() < border_left:
+        ball.goto(0, 0)
+        ball.dx *= -1
+        score_2 += 1
+        scr2.clear()
+        scr2.write("                                       Player 2: {}".format(score_2), align="center", font=("Comic Sans MS", 24, "normal"))
 
-        if ball.xcor() < -390:
-            ball.goto(0, 0)
-            ball.dx *= -1
-            score_2 += 1
-            scr2.clear()
-            scr2.write("                                       Player 2: {}".format(score_2), align="center", font=("Comic Sans MS", 24, "normal"))
+    
+    if ball.xcor() > border_right:
+        ball.goto(0, 0)
+        ball.dx *= -1
+        score_1 += 1
+        scr.clear()
+        scr.write("Player 1: {}                                        ".format(score_1), align="center", font=("Comic Sans MS", 24, "normal"))
 
-        if (ball.xcor() > 340 and ball.xcor() < 350) and (ball.ycor() < player_2.ycor() + 50 and ball.ycor() > player_2.ycor() -50):
-            ball.setx(340)
-            ball.dx *= -1
-            player_2_color = player_2.color()[0]
-            ball.color(player_2_color)
+    if (ball.xcor() > 340 and ball.xcor() < 350) and (ball.ycor() < player_2.ycor() + 50 and ball.ycor() > player_2.ycor() -50):
+        ball.setx(340)
+        ball.dx *= -1
+        player_2_color = player_2.color()[0]
+        ball.color(player_2_color)
 
-        if (ball.xcor() < -340 and ball.xcor() > -350) and (ball.ycor() < player_1.ycor() + 50 and ball.ycor() > player_1.ycor() -50):
-            ball.setx(-340)
-            ball.dx *= -1
-            player_1_color = player_1.color()[0]
-            ball.color(player_1_color)
-    except:
-        break
+    if (ball.xcor() < -340 and ball.xcor() > -350) and (ball.ycor() < player_1.ycor() + 50 and ball.ycor() > player_1.ycor() -50):
+        ball.setx(-340)
+        ball.dx *= -1
+        player_1_color = player_1.color()[0]
+        ball.color(player_1_color)
+
